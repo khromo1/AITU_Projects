@@ -1,21 +1,36 @@
 package fitnessapp;
 
-public class WorkoutRoutine {
-    private String workoutName;
-    private int duration;
-    private String[] exercises;
-    public WorkoutRoutine(String workoutName, String[] exercises, int duration) {
-        this.workoutName = workoutName;
+import java.util.Objects;
+
+public abstract class WorkoutRoutine {
+    protected String name;
+    protected int duration;
+
+    public WorkoutRoutine(String name, int duration) {
+        this.name = name;
         this.duration = duration;
-        this.exercises = exercises;
     }
-    public String getWorkoutName() {
-        return workoutName;
+
+    public String getName() { return name; }
+    public int getDuration() { return duration; }
+
+    public abstract String getType();
+
+    @Override
+    public String toString() {
+        return getType() + " workout: " + name + ", duration: " + duration + " min";
     }
-    public String[] getExercises() {
-        return exercises;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof WorkoutRoutine)) return false;
+        WorkoutRoutine that = (WorkoutRoutine) o;
+        return duration == that.duration && name.equals(that.name);
     }
-    public int getDuration() {
-        return duration;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, duration);
     }
 }
